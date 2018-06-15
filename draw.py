@@ -239,6 +239,7 @@ def generate_torus( cx, cy, cz, r0, r1, step ):
 
 def add_mesh( edges, filename):
     points = generate_mesh(filename)
+    print points
     i = 0
     while i < len(points):
         add_polygon( edges, points[i][0],
@@ -272,8 +273,8 @@ def generate_mesh(filename):
                 # print "face_vertices: " + str(face_vertices)
                 for i in range(2, len(face_vertices)):
                     points.append(anchor)
-                    points.append(vertices[i - 1])
-                    points.append(vertices[i])
+                    points.append(face_vertices[i - 1])
+                    points.append(face_vertices[i])
     return points
 
 def add_circle( points, cx, cy, cz, r, step ):
