@@ -237,6 +237,45 @@ def generate_torus( cx, cy, cz, r0, r1, step ):
             points.append([x, y, z])
     return points
 
+def add_mesh( edges, filename):
+    points = generate_mesh(filename)
+    i = 0
+    while i < len(points):
+        add_polygon( edges, points[i][0],
+                     points[i][1],
+                     points[i][2],
+                     points[i + 1][0],
+                     points[i + 1][1],
+                     points[i + 1][2],
+                     points[i + 2][0],
+                     points[i + 2][1],
+                     points[i + 2][2])
+        i = i + 3
+
+def generate_mesh(filename):
+    points = []
+    f = open(filename + ".obj", 'rU')
+    mesh = f.read()
+    f.close()
+    vertices = [[0, 0, 0, 1]]
+    lines = mesh.split("\n")
+    for line in lines:
+        line = line.split(' ')
+        line = [x for x in line if x != '']
+        if(len(line) > 0):
+            if (line[0] == 'v'):
+                vertices.append([float(i.split("/")[0]) for i in line[1:]])
+            elif(line[0] == 'f'):
+                face_vertices = [vertices[int(i.split("/")[0])] for i in line[1:]]
+                print face_vertices
+                anchor = face_vertices[0]
+                # print "face_vertices: " + str(face_vertices)
+                for i in range(2, len(face_vertices)):
+                    points.append(anchor)
+                    points.append(vertices[i - 1])
+                    points.append(vertices[i])
+    return points
+
 def add_circle( points, cx, cy, cz, r, step ):
     x0 = r + cx
     y0 = cy

@@ -172,28 +172,15 @@ def run(filename):
                           args[0], args[1], args[2], args[3], args[4], step_3d)
                 matrix_mult( stack[-1], tmp )
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
+                tmp =[]
             elif c == 'mesh':
-                f = open(args[0] + ".obj", 'rU')
-                mesh = f.read()
-                vertices = [[0, 0, 0]]
-                lines = mesh.split("\n")
-                for line in lines:
-                    print line
-                    line = line.split(' ')
-                    line = [x for x in line if x != '']
-                    print line
-                    if(len(line) > 0):
-                        if (line[0] == 'v'):
-                            print line[1:]
-                            vertices = vertices + [float(i.split("/")[0]) for i in line[1:]]
-                        elif(line[0] == 'f'):
-                            face_vertices = [vertices[int(i)] for i in line[1:]]
-                            anchor = face_vertices[0]
-                            for i in range(2, len(face_vertices) - 1):
-                                tmp.append(anchor)
-                                tmp.append(vertices[i - 1])
-                                tmp.append(vertices[i])
+                add_mesh(tmp, args[0])
+                # print "vertices" + str(vertices)
+                # print "temp: " + str(tmp)
+                matrix_mult( stack[-1], tmp )
+                print "temp: " + str(tmp)
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
+                # print screen
                 tmp = []
             elif c == 'line':
                 if isinstance(args[0], str):
