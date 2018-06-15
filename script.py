@@ -185,8 +185,7 @@ def run(filename):
                     if(len(line) > 0):
                         if (line[0] == 'v'):
                             print line[1:]
-                            vertices + [float(i.split("/")[0]) for i in line[1:]]
-                            print vertices
+                            vertices = vertices + [float(i.split("/")[0]) for i in line[1:]]
                         elif(line[0] == 'f'):
                             face_vertices = [vertices[int(i)] for i in line[1:]]
                             anchor = face_vertices[0]
