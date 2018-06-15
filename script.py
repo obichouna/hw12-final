@@ -89,24 +89,24 @@ def run(filename):
     view = [0,
             0,
             1];
-    ambient = [50,
-               50,
-               50]
-    light = [[0.5,
-              0.75,
+    ambient = [128,
+               0,
+               0]
+    light = [[1,
+              3,
               1],
-             [0,
-              255,
-              255]]
-    areflect = [0.1,
-                0.1,
-                0.1]
+             [255,
+              128,
+              0]]
+    areflect = [0.3,
+                0,
+                0]
     dreflect = [0.5,
-                0.5,
-                0.5]
-    sreflect = [0.5,
-                0.5,
-                0.5]
+                0.1,
+                0]
+    sreflect = [5,
+                2,
+                0]
 
     color = [0, 0, 0]
     tmp = new_matrix()
