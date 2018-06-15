@@ -1,0 +1,4 @@
+push
+mesh CHARACTER_Shrek
+display
+save shrek.png
