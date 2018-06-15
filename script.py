@@ -44,7 +44,7 @@ def first_pass( commands ):
     if is_frames and not is_basename:
         basename = "default"
         print("basename: default\n")
-    print num_frames
+    #print num_frames
 
 """======== second_pass( commands ) ==========
 
@@ -130,7 +130,7 @@ def run(filename):
         return
 
     first_pass(commands)
-    print num_frames
+    #print num_frames
     second_pass(commands, num_frames)
 
     for frame in range(int(num_frames)):
@@ -173,20 +173,27 @@ def run(filename):
                 matrix_mult( stack[-1], tmp )
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
             elif c == 'mesh':
-                mesh = open(args[0] + ".obj", 'rU')
+                f = open(args[0] + ".obj", 'rU')
+                mesh = f.read()
                 vertices = [[0, 0, 0]]
-                line = mesh.readline()
-                while line != None:
-                    line.split(' ')
-                    if (line[0] == 'v'):
-                        vertices + [float(i.split("/")[0]) for i in line[1:]]
-                    elif(line[0] == 'f'):
-                        face_vertices = [vertices[i] for i in line[1:]]
-                        anchor = face_vertices[0]
-                        for i in range(2, len(face_vertices) - 1):
-                            tmp.append(anchor)
-                            tmp.append(vertices[i - 1])
-                            tmp.append(vertices[i])
+                lines = mesh.split("\n")
+                for line in lines:
+                    print line
+                    line = line.split(' ')
+                    line = [x for x in line if x != '']
+                    print line
+                    if(len(line) > 0):
+                        if (line[0] == 'v'):
+                            print line[1:]
+                            vertices + [float(i.split("/")[0]) for i in line[1:]]
+                            print vertices
+                        elif(line[0] == 'f'):
+                            face_vertices = [vertices[int(i)] for i in line[1:]]
+                            anchor = face_vertices[0]
+                            for i in range(2, len(face_vertices) - 1):
+                                tmp.append(anchor)
+                                tmp.append(vertices[i - 1])
+                                tmp.append(vertices[i])
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
                 tmp = []
             elif c == 'line':
